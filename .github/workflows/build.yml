@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  XRAY_CORE_VERSION: 
+  XRAY_CORE_VERSION: v1.8.3
 
 jobs:
   build:
