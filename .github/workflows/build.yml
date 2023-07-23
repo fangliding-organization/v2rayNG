@@ -3,9 +3,11 @@ name: Build APK
 on:
   push:
   workflow_dispatch:
+    inputs:
+      XRAY_CORE_VERSION:
+        description: 'Xray core version or commit hash'
+        required: false
 
-env:
-  XRAY_CORE_VERSION: v1.8.3
 
 jobs:
   build:
@@ -55,8 +57,8 @@ jobs:
         cd ${{ github.workspace }}/build
         git clone --depth=1 -b main https://github.com/2dust/AndroidLibXrayLite.git
         cd AndroidLibXrayLite
-        if [[ -n "${{ env.XRAY_CORE_VERSION }}" ]]; then
-          go get github.com/xtls/xray-core@${{ env.XRAY_CORE_VERSION }}
+        if [[ -n "${{ github.event.inputs.XRAY_CORE_VERSION }}" ]]; then
+          go get github.com/xtls/xray-core@${{ github.event.inputs.XRAY_CORE_VERSION }}
         fi
         gomobile init
         go mod tidy -v
